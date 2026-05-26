@@ -66,7 +66,7 @@ export function TorontoMap({
       // style: "mapbox://styles/mapbox/light-v11",
       style: "mapbox://styles/daniiloliynyk/cmiuwhtq4006901qn06rwb9kd",
       center: torontoCenter,
-      zoom: 15,
+      zoom: 14.5,
       minZoom: 9,
       maxZoom: 18,
       attributionControl: false,
