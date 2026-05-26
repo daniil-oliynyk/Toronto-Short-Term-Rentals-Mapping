@@ -127,7 +127,7 @@ export function mapListingsSearchParams(
   params: MapListingsParams,
 ): URLSearchParams {
   const searchParams = baseMapSearchParams(params);
-  searchParams.set("zoom", String(Math.round(params.zoom)));
+  searchParams.set("zoom", String(Math.floor(params.zoom)));
 
   return searchParams;
 }

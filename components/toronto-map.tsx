@@ -8,12 +8,13 @@ import {
   type MapFeatureCollection,
 } from "@/lib/api";
 
-const torontoCenter: [number, number] = [-79.3832, 43.6532];
+const torontoCenter: [number, number] = [-79.3832, 43.6465];
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 const sourceID = "toronto-str-listings";
 const clusterLayerID = "toronto-str-clusters";
 const clusterCountLayerID = "toronto-str-cluster-counts";
 const listingLayerID = "toronto-str-listings";
+const individualListingsMinZoom = 16;
 const emptyFeatureCollection: MapFeatureCollection = {
   type: "FeatureCollection",
   features: [],
@@ -62,12 +63,14 @@ export function TorontoMap({
 
     const map = new mapboxgl.Map({
       container: containerRef.current,
-      style: "mapbox://styles/mapbox/light-v11",
+      // style: "mapbox://styles/mapbox/light-v11",
+      style: "mapbox://styles/daniiloliynyk/cmiuwhtq4006901qn06rwb9kd",
       center: torontoCenter,
-      zoom: 11,
+      zoom: 15,
       minZoom: 9,
       maxZoom: 18,
       attributionControl: false,
+      pitch: 45
     });
 
     map.addControl(new mapboxgl.NavigationControl({ visualizePitch: true }));
@@ -183,7 +186,7 @@ function addClusterInteractions(map: mapboxgl.Map) {
 
     map.easeTo({
       center: feature.geometry.coordinates as [number, number],
-      zoom: Math.min(Math.ceil(map.getZoom()) + 2, 14),
+      zoom: Math.min(Math.ceil(map.getZoom()) + 2, individualListingsMinZoom),
       duration: 500,
     });
   });
