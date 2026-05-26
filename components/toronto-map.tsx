@@ -11,8 +11,11 @@ import {
 const torontoCenter: [number, number] = [-79.3832, 43.6465];
 const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 const sourceID = "toronto-str-listings";
+const clusterGlowLayerID = "toronto-str-clusters-glow";
 const clusterLayerID = "toronto-str-clusters";
 const clusterCountLayerID = "toronto-str-cluster-counts";
+const clusterCountHoverLayerID = "toronto-str-cluster-counts-hover";
+const listingGlowLayerID = "toronto-str-listings-glow";
 const listingLayerID = "toronto-str-listings";
 const individualListingsMinZoom = 16;
 const emptyFeatureCollection: MapFeatureCollection = {
@@ -116,7 +119,7 @@ export function TorontoMap({
         .then((featureCollection) => {
           const source = map.getSource(sourceID);
           if (isGeoJSONSource(source)) {
-            source.setData(featureCollection);
+            source.setData(withPromotedFeatureIDs(featureCollection));
           }
         })
         .catch((error: unknown) => {
@@ -191,12 +194,47 @@ function addClusterInteractions(map: mapboxgl.Map) {
     });
   });
 
-  map.on("mouseenter", clusterLayerID, () => {
+  let hoveredClusterID: string | number | undefined;
+
+  map.on("mousemove", clusterLayerID, (event) => {
+    const feature = event.features?.[0];
+    const featureID =
+      stringProperty(feature?.properties?.id) ??
+      (feature?.id === undefined ? undefined : String(feature.id));
+
+    if (featureID === undefined) {
+      return;
+    }
+
     map.getCanvas().style.cursor = "pointer";
+
+    if (hoveredClusterID !== undefined && hoveredClusterID !== featureID) {
+      map.setFeatureState(
+        { source: sourceID, id: hoveredClusterID },
+        { hover: false },
+      );
+    }
+
+    hoveredClusterID = featureID;
+
+    map.setFeatureState(
+      { source: sourceID, id: hoveredClusterID },
+      { hover: true },
+    );
   });
+
 
   map.on("mouseleave", clusterLayerID, () => {
     map.getCanvas().style.cursor = "";
+
+    if (hoveredClusterID !== undefined) {
+      map.setFeatureState(
+        { source: sourceID, id: hoveredClusterID },
+        { hover: false },
+      );
+    }
+
+    hoveredClusterID = undefined;
   });
 }
 
@@ -236,8 +274,46 @@ function addListingInteractions(
     map.getCanvas().style.cursor = "pointer";
   });
 
+  let hoveredListingID: string | number | undefined;
+
+  map.on("mousemove", listingLayerID, (event) => {
+    const feature = event.features?.[0];
+    const featureID =
+      stringProperty(feature?.properties?.id) ??
+      (feature?.id === undefined ? undefined : String(feature.id));
+
+    if (featureID === undefined) {
+      return;
+    }
+
+    map.getCanvas().style.cursor = "pointer";
+
+    if (hoveredListingID !== undefined && hoveredListingID !== featureID) {
+      map.setFeatureState(
+        { source: sourceID, id: hoveredListingID },
+        { hover: false },
+      );
+    }
+
+    hoveredListingID = featureID;
+
+    map.setFeatureState(
+      { source: sourceID, id: hoveredListingID },
+      { hover: true },
+    );
+  });
+
   map.on("mouseleave", listingLayerID, () => {
     map.getCanvas().style.cursor = "";
+
+    if (hoveredListingID !== undefined) {
+      map.setFeatureState(
+        { source: sourceID, id: hoveredListingID },
+        { hover: false },
+      );
+    }
+
+    hoveredListingID = undefined;
   });
 }
 
@@ -245,7 +321,51 @@ function addListingsSourceAndLayers(map: mapboxgl.Map) {
   if (!map.getSource(sourceID)) {
     map.addSource(sourceID, {
       type: "geojson",
+      promoteId: "id",
       data: emptyFeatureCollection,
+    });
+  }
+
+  if (!map.getLayer(clusterGlowLayerID)) {
+    map.addLayer({
+      id: clusterGlowLayerID,
+      type: "circle",
+      source: sourceID,
+      filter: ["==", ["get", "cluster"], true],
+      paint: {
+        "circle-color": "#d316ec",
+        "circle-radius": [
+          "+",
+          [
+            "step",
+            ["get", "count"],
+            25,
+            25,
+            31,
+            100,
+            39,
+          ],
+          [
+            "case",
+            ["boolean", ["feature-state", "hover"], false],
+            8,
+            0,
+          ],
+        ],
+        "circle-radius-transition": { duration: 120 },
+        "circle-blur": [
+          "case",
+          ["boolean", ["feature-state", "hover"], false],
+          0.45,
+          0.35,
+        ],
+        "circle-opacity": [
+          "case",
+          ["boolean", ["feature-state", "hover"], false],
+          0.5,
+          0.32,
+        ],
+      },
     });
   }
 
@@ -266,16 +386,26 @@ function addListingsSourceAndLayers(map: mapboxgl.Map) {
           "#0f5f63",
         ],
         "circle-radius": [
-          "step",
-          ["get", "count"],
-          15,
-          25,
-          20,
-          100,
-          26,
+          "+",
+          [
+            "step",
+            ["get", "count"],
+            15,
+            25,
+            20,
+            100,
+            26,
+          ],
+          [
+            "case",
+            ["boolean", ["feature-state", "hover"], false],
+            4,
+            0,
+          ],
         ],
-        "circle-stroke-color": "#ffffff",
-        "circle-stroke-width": 2,
+        "circle-radius-transition": { duration: 120 },
+        "circle-stroke-color": "#d316ec",
+        "circle-stroke-width": 3,
       },
     });
   }
@@ -290,9 +420,73 @@ function addListingsSourceAndLayers(map: mapboxgl.Map) {
         "text-field": ["to-string", ["get", "count"]],
         "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
         "text-size": 12,
+        "text-allow-overlap": true,
+        "text-ignore-placement": true,
       },
       paint: {
         "text-color": "#ffffff",
+        "text-opacity": [
+          "case",
+          ["boolean", ["feature-state", "hover"], false],
+          0,
+          1,
+        ],
+      },
+    });
+  }
+
+  if (!map.getLayer(clusterCountHoverLayerID)) {
+    map.addLayer({
+      id: clusterCountHoverLayerID,
+      type: "symbol",
+      source: sourceID,
+      filter: ["==", ["get", "cluster"], true],
+      layout: {
+        "text-field": ["to-string", ["get", "count"]],
+        "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+        "text-size": 14,
+        "text-allow-overlap": true,
+        "text-ignore-placement": true,
+      },
+      paint: {
+        "text-color": "#ffffff",
+        "text-opacity": [
+          "case",
+          ["boolean", ["feature-state", "hover"], false],
+          1,
+          0,
+        ],
+      },
+    });
+  }
+
+  if (!map.getLayer(listingGlowLayerID)) {
+    map.addLayer({
+      id: listingGlowLayerID,
+      type: "circle",
+      source: sourceID,
+      filter: ["==", ["get", "cluster"], false],
+      paint: {
+        "circle-color": "#ff0000",
+        "circle-radius": [
+          "case",
+          ["boolean", ["feature-state", "hover"], false],
+          18,
+          14,
+        ],
+        "circle-radius-transition": { duration: 120 },
+        "circle-blur": [
+          "case",
+          ["boolean", ["feature-state", "hover"], false],
+          0.45,
+          0.35,
+        ],
+        "circle-opacity": [
+          "case",
+          ["boolean", ["feature-state", "hover"], false],
+          0.5,
+          0.32,
+        ],
       },
     });
   }
@@ -304,9 +498,15 @@ function addListingsSourceAndLayers(map: mapboxgl.Map) {
       source: sourceID,
       filter: ["==", ["get", "cluster"], false],
       paint: {
-        "circle-color": "#d94f3d",
-        "circle-radius": 6,
-        "circle-stroke-color": "#ffffff",
+        "circle-color": "#ff0000",
+        "circle-radius": [
+          "case",
+          ["boolean", ["feature-state", "hover"], false],
+          11,
+          8,
+        ],
+        "circle-radius-transition": { duration: 120 },
+        "circle-stroke-color": "#ff0000",
         "circle-stroke-width": 1.5,
       },
     });
@@ -317,6 +517,26 @@ function isGeoJSONSource(
   source: mapboxgl.Source | undefined,
 ): source is mapboxgl.GeoJSONSource {
   return Boolean(source && "setData" in source);
+}
+
+function withPromotedFeatureIDs(
+  featureCollection: MapFeatureCollection,
+): MapFeatureCollection {
+  return {
+    ...featureCollection,
+    features: featureCollection.features.map((feature) => {
+      const id = feature.properties.id ?? feature.id;
+
+      return {
+        ...feature,
+        id,
+        properties: {
+          ...feature.properties,
+          id,
+        },
+      };
+    }),
+  };
 }
 
 function isAbortError(error: unknown): boolean {
