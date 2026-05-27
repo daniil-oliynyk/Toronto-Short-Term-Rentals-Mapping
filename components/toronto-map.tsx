@@ -166,13 +166,13 @@ export function TorontoMap({
   }, [onListingSelect]);
 
   return (
-    <div className="absolute inset-0">
+    <div className="toronto-map absolute inset-0">
       <div className="h-full w-full" ref={containerRef} />
       <div
-        className="absolute inset-0 flex items-center justify-center bg-[#edf2f3] px-6"
+        className="absolute inset-0 flex items-center justify-center bg-[#0b0b0c] px-6"
         ref={fallbackRef}
       >
-        <div className="max-w-sm rounded-md border border-[#aec0c2] bg-white/95 px-4 py-3 text-center text-sm font-medium text-[#526368] shadow-sm">
+        <div className="max-w-sm rounded-md border border-[#3a3a3d] bg-[#141414]/95 px-4 py-3 text-center text-sm font-medium text-[#b6b6ba] shadow-[0_8px_24px_rgb(0_0_0/28%)]">
           Loading Toronto map
         </div>
       </div>
@@ -243,6 +243,7 @@ function addListingInteractions(
   onListingSelect: (id: string) => void,
   popupRef: MutableRefObject<mapboxgl.Popup | null>,
 ) {
+  
   map.on("click", listingLayerID, (event) => {
     const feature = event.features?.[0];
     if (!feature || feature.geometry.type !== "Point") {
@@ -253,25 +254,37 @@ function addListingInteractions(
     if (!id) {
       return;
     }
+    onListingSelect(id);
+
+  });
+
+  map.on("mouseenter", listingLayerID, (event) => {
+    map.getCanvas().style.cursor = "pointer";
+
+    const feature = event.features?.[0];
+    if (!feature || feature.geometry.type !== "Point") {
+      return;
+    }
+
+    const id = stringProperty(feature.properties?.id);
+    if (!id) {
+      return;
+    }
+
 
     const address = stringProperty(feature.properties?.address) ?? id;
-    onListingSelect(id);
+    
 
     popupRef.current?.remove();
     popupRef.current = new mapboxgl.Popup({
-      closeButton: true,
-      closeOnClick: true,
       offset: 12,
     })
       .setLngLat(feature.geometry.coordinates as [number, number])
       .setHTML(
-        `<div class="str-popup"><strong>${escapeHTML(address)}</strong><span>${escapeHTML(id)}</span></div>`,
+        `<div class="str-popup"><strong>${escapeHTML(address)}</strong></div>`,
       )
       .addTo(map);
-  });
 
-  map.on("mouseenter", listingLayerID, () => {
-    map.getCanvas().style.cursor = "pointer";
   });
 
   let hoveredListingID: string | number | undefined;
@@ -305,6 +318,9 @@ function addListingInteractions(
 
   map.on("mouseleave", listingLayerID, () => {
     map.getCanvas().style.cursor = "";
+
+    popupRef.current?.remove();
+
 
     if (hoveredListingID !== undefined) {
       map.setFeatureState(

@@ -32,20 +32,51 @@ textarea {
   font: inherit;
 }
 
-.mapboxgl-ctrl-group {
+.toronto-map .mapboxgl-ctrl-group {
+  background: #141414 !important;
+  border: 1px solid #3a3a3d !important;
   border-radius: 6px !important;
-  box-shadow: 0 1px 4px rgb(23 32 38 / 18%) !important;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 28%) !important;
 }
 
-.mapboxgl-ctrl button {
-  color: #172026;
+.toronto-map .mapboxgl-ctrl-group button {
+  background-color: transparent;
+}
+
+.toronto-map .mapboxgl-ctrl-group button:not(:disabled):hover {
+  background-color: #242426;
+}
+
+.toronto-map .mapboxgl-ctrl-group button:focus:focus-visible {
+  box-shadow: 0 0 0 2px #8f8f95;
+}
+
+.toronto-map .mapboxgl-ctrl-group button + button {
+  border-top-color: #2e2e31 !important;
+}
+
+.toronto-map .mapboxgl-ctrl-icon {
+  filter: invert(96%) sepia(3%) saturate(78%) hue-rotate(202deg)
+    brightness(98%) contrast(92%);
+}
+
+.toronto-map .mapboxgl-popup-content {
+  background: #141414;
+  border: 1px solid #3a3a3d;
+  border-radius: 6px;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 32%);
+}
+
+.toronto-map .mapboxgl-popup-tip {
+  border-top-color: #141414 !important;
+  border-bottom-color: #141414 !important;
 }
 
 .str-popup {
   display: grid;
   gap: 4px;
   max-width: 220px;
-  color: #172026;
+  color: #f1f1f2;
 }
 
 .str-popup strong {
@@ -54,6 +85,6 @@ textarea {
 }
 
 .str-popup span {
-  color: #637277;
+  color: #a9a9ad;
   font-size: 12px;
 }

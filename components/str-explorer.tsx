@@ -135,7 +135,7 @@ export function STRExplorer() {
   };
 
   return (
-    <main className="flex min-h-dvh bg-[#eef2f3] text-[#172026]">
+    <main className="flex min-h-dvh bg-[#0b0b0c] text-[#f1f1f2]">
       <section className="relative flex min-h-dvh flex-1 overflow-hidden">
         <TorontoMap
           onListingSelect={handleListingSelect}
@@ -145,13 +145,13 @@ export function STRExplorer() {
         />
 
         <div className="absolute left-4 right-4 top-4 z-10 flex flex-col gap-3 lg:left-6 lg:right-[390px]">
-          <div className="flex flex-col gap-3 rounded-md border border-[#c7d1d3] bg-white/95 p-3 shadow-sm backdrop-blur md:flex-row">
+          <div className="flex flex-col gap-3 rounded-md border border-[#3a3a3d] bg-[#141414]/95 p-3 shadow-[0_12px_32px_rgb(0_0_0/32%)] backdrop-blur md:flex-row">
             <label className="flex min-w-0 flex-1 flex-col gap-1">
-              <span className="text-xs font-semibold uppercase tracking-normal text-[#526368]">
+              <span className="text-xs font-semibold uppercase tracking-normal text-[#b6b6ba]">
                 Search
               </span>
               <input
-                className="h-10 rounded-md border border-[#b9c5c8] bg-white px-3 text-sm outline-none transition focus:border-[#1f7a6b] focus:ring-2 focus:ring-[#1f7a6b]/20"
+                className="h-10 rounded-md border border-[#47474a] bg-[#1c1c1f] px-3 text-sm text-[#f1f1f2] outline-none transition placeholder:text-[#7b7b80] focus:border-[#8f8f95] focus:ring-2 focus:ring-[#8f8f95]/25"
                 onChange={(event) => {
                   setSearchValue(event.target.value);
                 }}
@@ -162,11 +162,11 @@ export function STRExplorer() {
             </label>
 
             <label className="flex min-w-0 flex-col gap-1 md:w-64">
-              <span className="text-xs font-semibold uppercase tracking-normal text-[#526368]">
+              <span className="text-xs font-semibold uppercase tracking-normal text-[#b6b6ba]">
                 Property type
               </span>
               <select
-                className="h-10 rounded-md border border-[#b9c5c8] bg-white px-3 text-sm outline-none transition focus:border-[#1f7a6b] focus:ring-2 focus:ring-[#1f7a6b]/20"
+                className="h-10 rounded-md border border-[#47474a] bg-[#1c1c1f] px-3 text-sm text-[#f1f1f2] outline-none transition focus:border-[#8f8f95] focus:ring-2 focus:ring-[#8f8f95]/25"
                 onChange={(event) => {
                   setPropertyType(event.target.value);
                 }}
@@ -182,7 +182,7 @@ export function STRExplorer() {
             </label>
 
             <button
-              className="h-10 rounded-md border border-[#b9c5c8] bg-[#172026] px-4 text-sm font-semibold text-white transition hover:bg-[#2d3b40] disabled:cursor-not-allowed disabled:border-[#d6dedf] disabled:bg-[#e6ecee] disabled:text-[#7b898d] md:self-end"
+              className="h-10 rounded-md border border-[#525255] bg-[#242426] px-4 text-sm font-semibold text-[#f1f1f2] transition hover:bg-[#303034] disabled:cursor-not-allowed disabled:border-[#303033] disabled:bg-[#171719] disabled:text-[#6f6f74] md:self-end"
               disabled={activeFilterCount === 0}
               onClick={clearFilters}
               type="button"
@@ -198,32 +198,29 @@ export function STRExplorer() {
           />
         </div>
 
-        <div className="absolute bottom-4 left-4 z-10 rounded-md border border-[#c7d1d3] bg-white/95 px-3 py-2 text-xs font-medium text-[#526368] shadow-sm">
-          Toronto short-term rental registrations
-        </div>
       </section>
 
-      <aside className="hidden w-[360px] shrink-0 border-l border-[#c7d1d3] bg-[#fbfcfc] lg:flex lg:min-h-dvh lg:flex-col">
-        <header className="border-b border-[#d6dedf] px-5 py-4">
-          <p className="text-xs font-semibold uppercase tracking-normal text-[#637277]">
+      <aside className="hidden w-[360px] shrink-0 border-l border-[#2a2a2d] bg-[#101011] lg:flex lg:min-h-dvh lg:flex-col">
+        <header className="border-b border-[#2e2e31] px-5 py-4">
+          <p className="text-xs font-semibold uppercase tracking-normal text-[#a9a9ad]">
             Visible area
           </p>
-          <h1 className="mt-1 text-xl font-semibold text-[#172026]">
+          <h1 className="mt-1 text-xl font-semibold text-[#f1f1f2]">
             Toronto STR Explorer
           </h1>
         </header>
 
-        <section className="border-b border-[#d6dedf] px-5 py-4">
+        <section className="border-b border-[#2e2e31] px-5 py-4">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-normal text-[#637277]">
+              <p className="text-xs font-semibold uppercase tracking-normal text-[#a9a9ad]">
                 Listings
               </p>
-              <p className="mt-1 text-3xl font-semibold text-[#172026]">
+              <p className="mt-1 text-3xl font-semibold text-[#f1f1f2]">
                 {formatNumber(wardStats?.total ?? 0)}
               </p>
             </div>
-            <p className="text-right text-sm text-[#637277]">
+            <p className="text-right text-sm text-[#b6b6ba]">
               {meta
                 ? `${formatNumber(meta.totalListings)} registered citywide`
                 : activeFilterCount
@@ -233,10 +230,10 @@ export function STRExplorer() {
           </div>
         </section>
 
-        <section className="border-b border-[#d6dedf] px-5 py-4">
+        <section className="border-b border-[#2e2e31] px-5 py-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-[#172026]">Ward counts</h2>
-            <span className="text-xs font-medium text-[#637277]">
+            <h2 className="text-sm font-semibold text-[#f1f1f2]">Ward counts</h2>
+            <span className="text-xs font-medium text-[#a9a9ad]">
               {wardStatsStatus === "loading"
                 ? "Updating"
                 : `${formatNumber(wardStats?.total ?? 0)} total`}
@@ -246,14 +243,14 @@ export function STRExplorer() {
         </section>
 
         <section className="flex min-h-0 flex-1 flex-col px-5 py-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-[#172026]">Listings</h2>
-            <span className="text-xs font-medium text-[#637277]">0 shown</span>
+          {/* <div className="flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-[#f1f1f2]">Listings</h2>
+            <span className="text-xs font-medium text-[#a9a9ad]">0 shown</span>
           </div>
 
-          <div className="mt-3 flex min-h-28 items-center justify-center rounded-md border border-dashed border-[#b9c5c8] bg-white px-4 text-center text-sm text-[#637277]">
+          <div className="mt-3 flex min-h-28 items-center justify-center rounded-md border border-dashed border-[#444447] bg-[#18181a] px-4 text-center text-sm text-[#a9a9ad]">
             No listings in view
-          </div>
+          </div> */}
 
           <ListingSelection
             listing={selectedListing}
@@ -281,18 +278,18 @@ function FreshnessBadge({
       : `Updated ${formatRelativeDate(meta?.lastSuccessfulIngestionAt ?? null)}`;
 
   return (
-    <div className="flex w-fit max-w-full flex-wrap items-center gap-x-2 gap-y-1 rounded-md border border-[#b8c9ca] bg-white/90 px-3 py-2 text-sm shadow-sm backdrop-blur">
+    <div className="flex w-fit max-w-full flex-wrap items-center gap-x-2 gap-y-1 rounded-md border border-[#3a3a3d] bg-[#141414]/90 px-3 py-2 text-sm text-[#f1f1f2] shadow-[0_8px_24px_rgb(0_0_0/28%)] backdrop-blur">
       <span
         className={`h-2.5 w-2.5 rounded-full ${
           status === "error" ? "bg-[#d96c4a]" : "bg-[#1f9d75]"
         }`}
       />
       <span className="font-medium">{label}</span>
-      <span className="text-[#647277]">
+      <span className="text-[#a9a9ad]">
         {formatNumber(visibleListingCount)} in view
       </span>
       {meta ? (
-        <span className="text-[#647277]">
+        <span className="text-[#a9a9ad]">
           {formatNumber(meta.totalListings)} total
         </span>
       ) : null}
@@ -311,11 +308,11 @@ function ListingSelection({
 }) {
   if (status === "loading") {
     return (
-      <div className="mt-4 rounded-md border border-[#d6dedf] bg-white p-4">
-        <p className="text-xs font-semibold uppercase tracking-normal text-[#637277]">
+      <div className="mt-4 rounded-md border border-[#2e2e31] bg-[#18181a] p-4">
+        <p className="text-xs font-semibold uppercase tracking-normal text-[#a9a9ad]">
           Selection
         </p>
-        <p className="mt-2 text-sm text-[#2d3b40]">
+        <p className="mt-2 text-sm text-[#d4d4d6]">
           Loading {selectedListingID}
         </p>
       </div>
@@ -324,11 +321,11 @@ function ListingSelection({
 
   if (status === "error") {
     return (
-      <div className="mt-4 rounded-md border border-[#d6dedf] bg-white p-4">
-        <p className="text-xs font-semibold uppercase tracking-normal text-[#637277]">
+      <div className="mt-4 rounded-md border border-[#3d2d2b] bg-[#211816] p-4">
+        <p className="text-xs font-semibold uppercase tracking-normal text-[#bda49f]">
           Selection
         </p>
-        <p className="mt-2 text-sm text-[#9b2c2c]">
+        <p className="mt-2 text-sm text-[#ffb6a3]">
           Listing details could not be loaded.
         </p>
       </div>
@@ -337,11 +334,11 @@ function ListingSelection({
 
   if (!listing) {
     return (
-      <div className="mt-4 rounded-md border border-[#d6dedf] bg-white p-4">
-        <p className="text-xs font-semibold uppercase tracking-normal text-[#637277]">
+      <div className="mt-4 rounded-md border border-[#2e2e31] bg-[#18181a] p-4">
+        <p className="text-xs font-semibold uppercase tracking-normal text-[#a9a9ad]">
           Selection
         </p>
-        <p className="mt-2 text-sm text-[#2d3b40]">
+        <p className="mt-2 text-sm text-[#d4d4d6]">
           Select a point on the map to view registration details.
         </p>
       </div>
@@ -349,11 +346,11 @@ function ListingSelection({
   }
 
   return (
-    <div className="mt-4 rounded-md border border-[#d6dedf] bg-white p-4">
-      <p className="text-xs font-semibold uppercase tracking-normal text-[#637277]">
+    <div className="mt-4 rounded-md border border-[#2e2e31] bg-[#18181a] p-4">
+      <p className="text-xs font-semibold uppercase tracking-normal text-[#a9a9ad]">
         Selection
       </p>
-      <h3 className="mt-2 text-base font-semibold text-[#172026]">
+      <h3 className="mt-2 text-base font-semibold text-[#f1f1f2]">
         {listing.address}
       </h3>
       <dl className="mt-3 grid grid-cols-1 gap-3 text-sm">
@@ -382,7 +379,7 @@ function WardStatsList({
 }) {
   if (status === "error") {
     return (
-      <div className="mt-3 rounded-md border border-[#d6dedf] bg-white px-3 py-2 text-sm text-[#9b2c2c]">
+      <div className="mt-3 rounded-md border border-[#3d2d2b] bg-[#211816] px-3 py-2 text-sm text-[#ffb6a3]">
         Ward counts could not be loaded.
       </div>
     );
@@ -390,7 +387,7 @@ function WardStatsList({
 
   if (!stats?.wards.length) {
     return (
-      <div className="mt-3 rounded-md border border-dashed border-[#b9c5c8] bg-white px-3 py-3 text-sm text-[#637277]">
+      <div className="mt-3 rounded-md border border-dashed border-[#444447] bg-[#18181a] px-3 py-3 text-sm text-[#a9a9ad]">
         No ward counts for the current view.
       </div>
     );
@@ -400,15 +397,15 @@ function WardStatsList({
     <div className="mt-3 space-y-2">
       {stats.wards.slice(0, 8).map((wardCount) => (
         <div
-          className="flex items-center justify-between rounded-md border border-[#d6dedf] bg-white px-3 py-2"
+          className="flex items-center justify-between rounded-md border border-[#2e2e31] bg-[#18181a] px-3 py-2"
           key={`${wardCount.wardNumber ?? "unknown"}-${wardCount.wardName ?? "ward"}`}
         >
-          <span className="truncate text-sm text-[#2d3b40]">
+          <span className="truncate text-sm text-[#d4d4d6]">
             {[wardCount.wardNumber, wardCount.wardName]
               .filter(Boolean)
               .join(" - ") || "Unknown ward"}
           </span>
-          <span className="ml-3 text-sm font-semibold text-[#1f7a6b]">
+          <span className="ml-3 text-sm font-semibold text-[#c7c7cb]">
             {formatNumber(wardCount.count)}
           </span>
         </div>
@@ -420,10 +417,10 @@ function WardStatsList({
 function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <dt className="text-xs font-semibold uppercase tracking-normal text-[#637277]">
+      <dt className="text-xs font-semibold uppercase tracking-normal text-[#a9a9ad]">
         {label}
       </dt>
-      <dd className="mt-1 break-words text-[#2d3b40]">{value || "None"}</dd>
+      <dd className="mt-1 break-words text-[#d4d4d6]">{value || "None"}</dd>
     </div>
   );
 }
