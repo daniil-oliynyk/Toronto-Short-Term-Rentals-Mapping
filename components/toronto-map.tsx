@@ -17,7 +17,7 @@ const clusterCountLayerID = "toronto-str-cluster-counts";
 const clusterCountHoverLayerID = "toronto-str-cluster-counts-hover";
 const listingGlowLayerID = "toronto-str-listings-glow";
 const listingLayerID = "toronto-str-listings";
-const individualListingsMinZoom = 16;
+const individualListingsMinZoom = 15;
 const emptyFeatureCollection: MapFeatureCollection = {
   type: "FeatureCollection",
   features: [],
@@ -460,36 +460,36 @@ function addListingsSourceAndLayers(map: mapboxgl.Map) {
     });
   }
 
-  if (!map.getLayer(listingGlowLayerID)) {
-    map.addLayer({
-      id: listingGlowLayerID,
-      type: "circle",
-      source: sourceID,
-      filter: ["==", ["get", "cluster"], false],
-      paint: {
-        "circle-color": "#ff0000",
-        "circle-radius": [
-          "case",
-          ["boolean", ["feature-state", "hover"], false],
-          18,
-          14,
-        ],
-        "circle-radius-transition": { duration: 120 },
-        "circle-blur": [
-          "case",
-          ["boolean", ["feature-state", "hover"], false],
-          0.45,
-          0.35,
-        ],
-        "circle-opacity": [
-          "case",
-          ["boolean", ["feature-state", "hover"], false],
-          0.5,
-          0.32,
-        ],
-      },
-    });
-  }
+  // if (!map.getLayer(listingGlowLayerID)) {
+  //   map.addLayer({
+  //     id: listingGlowLayerID,
+  //     type: "circle",
+  //     source: sourceID,
+  //     filter: ["==", ["get", "cluster"], false],
+  //     paint: {
+  //       "circle-color": "#ff0000",
+  //       "circle-radius": [
+  //         "case",
+  //         ["boolean", ["feature-state", "hover"], false],
+  //         16,
+  //         12,
+  //       ],
+  //       "circle-radius-transition": { duration: 120 },
+  //       "circle-blur": [
+  //         "case",
+  //         ["boolean", ["feature-state", "hover"], false],
+  //         0.45,
+  //         0.18,
+  //       ],
+  //       "circle-opacity": [
+  //         "case",
+  //         ["boolean", ["feature-state", "hover"], false],
+  //         0.5,
+  //         0.32,
+  //       ],
+  //     },
+  //   });
+  // }
 
   if (!map.getLayer(listingLayerID)) {
     map.addLayer({
@@ -502,8 +502,8 @@ function addListingsSourceAndLayers(map: mapboxgl.Map) {
         "circle-radius": [
           "case",
           ["boolean", ["feature-state", "hover"], false],
-          11,
-          8,
+          9,
+          6,
         ],
         "circle-radius-transition": { duration: 120 },
         "circle-stroke-color": "#ff0000",
