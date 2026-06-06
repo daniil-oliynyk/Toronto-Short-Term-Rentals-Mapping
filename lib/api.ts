@@ -16,6 +16,7 @@ export type ListingDetail = {
   sourceUpdatedAt: string | null;
   ingestedAt: string;
   ingestionRunId: string;
+  registrationIds: string[];
 };
 
 export type GeoJSONPoint = {

@@ -17,7 +17,7 @@ const clusterCountLayerID = "toronto-str-cluster-counts";
 const clusterCountHoverLayerID = "toronto-str-cluster-counts-hover";
 const listingGlowLayerID = "toronto-str-listings-glow";
 const listingLayerID = "toronto-str-listings";
-const individualListingsMinZoom = 15;
+const individualListingsMinZoom = 17;
 const emptyFeatureCollection: MapFeatureCollection = {
   type: "FeatureCollection",
   features: [],
@@ -73,7 +73,8 @@ export function TorontoMap({
       minZoom: 9,
       maxZoom: 18,
       attributionControl: false,
-      pitch: 45
+      pitch: 45,
+      pitchWithRotate: false,
     });
 
     map.addControl(new mapboxgl.NavigationControl({ visualizePitch: true }));
@@ -476,37 +477,7 @@ function addListingsSourceAndLayers(map: mapboxgl.Map) {
     });
   }
 
-  // if (!map.getLayer(listingGlowLayerID)) {
-  //   map.addLayer({
-  //     id: listingGlowLayerID,
-  //     type: "circle",
-  //     source: sourceID,
-  //     filter: ["==", ["get", "cluster"], false],
-  //     paint: {
-  //       "circle-color": "#ff0000",
-  //       "circle-radius": [
-  //         "case",
-  //         ["boolean", ["feature-state", "hover"], false],
-  //         16,
-  //         12,
-  //       ],
-  //       "circle-radius-transition": { duration: 120 },
-  //       "circle-blur": [
-  //         "case",
-  //         ["boolean", ["feature-state", "hover"], false],
-  //         0.45,
-  //         0.18,
-  //       ],
-  //       "circle-opacity": [
-  //         "case",
-  //         ["boolean", ["feature-state", "hover"], false],
-  //         0.5,
-  //         0.32,
-  //       ],
-  //     },
-  //   });
-  // }
-
+  
   if (!map.getLayer(listingLayerID)) {
     map.addLayer({
       id: listingLayerID,
@@ -522,7 +493,7 @@ function addListingsSourceAndLayers(map: mapboxgl.Map) {
           6,
         ],
         "circle-radius-transition": { duration: 120 },
-        "circle-stroke-color": "#ff0000",
+        "circle-stroke-color": "#000000",
         "circle-stroke-width": 1.5,
       },
     });

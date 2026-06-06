@@ -1,5 +1,14 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Configuration
+
+Required local environment variables:
+
+```bash
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
+NEXT_PUBLIC_MAPBOX_TOKEN=your-mapbox-token
+```
+
 ## Getting Started
 
 First, run the development server:

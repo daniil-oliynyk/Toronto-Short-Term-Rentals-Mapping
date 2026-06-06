@@ -354,7 +354,6 @@ function ListingSelection({
         {listing.address}
       </h3>
       <dl className="mt-3 grid grid-cols-1 gap-3 text-sm">
-        <Detail label="Registration" value={listing.id} />
         <Detail label="Postal code" value={listing.postalCode} />
         <Detail label="Property type" value={listing.propertyType ?? "None"} />
         <Detail
@@ -366,6 +365,28 @@ function ListingSelection({
         <Detail label="Source updated" value={formatDate(listing.sourceUpdatedAt)} />
         <Detail label="Ingested" value={formatDate(listing.ingestedAt)} />
       </dl>
+
+      <div className="mt-4 border-t border-[#2e2e31] pt-4">
+        <div className="flex items-center justify-between gap-3">
+          <h4 className="text-sm font-semibold text-[#f1f1f2]">
+            Registrations at this address
+          </h4>
+          <span className="shrink-0 text-xs font-medium text-[#a9a9ad]">
+            {formatNumber(listing.registrationIds.length)} total
+          </span>
+        </div>
+
+        <div className="mt-3 max-h-56 overflow-y-auto rounded-md border border-[#2e2e31] bg-[#121214]">
+          {listing.registrationIds.map((registrationID) => (
+            <div
+              className="border-b border-[#2e2e31] px-3 py-2 text-sm text-[#d4d4d6] last:border-b-0"
+              key={registrationID}
+            >
+              {registrationID}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
