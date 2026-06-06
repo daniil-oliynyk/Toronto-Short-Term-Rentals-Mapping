@@ -80,11 +80,11 @@ export type WardStatsParams = {
   propertyType?: string;
 };
 
-const apiBaseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const apiBaseURL = process.env.API_BASE_URL;
 
 export function getAPIBaseURL(): string {
   if (!apiBaseURL) {
-    throw new Error("NEXT_PUBLIC_API_BASE_URL is not configured");
+    throw new Error("API_BASE_URL is not configured");
   }
 
   return apiBaseURL.replace(/\/+$/, "");
