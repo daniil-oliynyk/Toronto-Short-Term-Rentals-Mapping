@@ -5,7 +5,8 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 Required local environment variables:
 
 ```bash
-NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
+API_BASE_URL=http://localhost:8080
+INTERNAL_API_KEY=shared-secret-with-go-api
 NEXT_PUBLIC_MAPBOX_TOKEN=your-mapbox-token
 ```
 

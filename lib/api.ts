@@ -80,16 +80,6 @@ export type WardStatsParams = {
   propertyType?: string;
 };
 
-const apiBaseURL = process.env.API_BASE_URL;
-
-export function getAPIBaseURL(): string {
-  if (!apiBaseURL) {
-    throw new Error("API_BASE_URL is not configured");
-  }
-
-  return apiBaseURL.replace(/\/+$/, "");
-}
-
 export async function fetchMeta(init?: RequestInit): Promise<ApiMeta> {
   return fetchJSON<ApiMeta>("/api/meta", init);
 }
@@ -140,17 +130,52 @@ export function wardStatsSearchParams(params: WardStatsParams): URLSearchParams 
 async function fetchJSON<T>(path: string, init?: RequestInit): Promise<T> {
   const headers = new Headers(init?.headers);
   headers.set("Accept", "application/json");
+  const method = init?.method?.toUpperCase() ?? "GET";
+  const url = path;
+  const startedAt = Date.now();
 
-  const response = await fetch(`${getAPIBaseURL()}${path}`, {
-    ...init,
-    headers,
+  console.info("[api] request", {
+    method,
+    url,
   });
 
-  if (!response.ok) {
-    throw new Error(`API request failed: ${response.status}`);
-  }
+  try {
+    const response = await fetch(url, {
+      ...init,
+      headers,
+    });
 
-  return response.json() as Promise<T>;
+    console.info("[api] response", {
+      durationMs: Date.now() - startedAt,
+      method,
+      ok: response.ok,
+      status: response.status,
+      statusText: response.statusText,
+      url,
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `API request failed: ${method} ${url} returned ${response.status} ${response.statusText}`,
+      );
+    }
+
+    return (await response.json()) as T;
+  } catch (error) {
+    const aborted =
+      init?.signal?.aborted ||
+      (error instanceof DOMException && error.name === "AbortError");
+    const log = aborted ? console.debug : console.error;
+
+    log(aborted ? "[api] request aborted" : "[api] request failed", {
+      durationMs: Date.now() - startedAt,
+      error,
+      method,
+      url,
+    });
+
+    throw error;
+  }
 }
 
 function baseMapSearchParams(params: WardStatsParams): URLSearchParams {

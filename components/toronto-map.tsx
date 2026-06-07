@@ -17,7 +17,7 @@ const clusterCountLayerID = "toronto-str-cluster-counts";
 const clusterCountHoverLayerID = "toronto-str-cluster-counts-hover";
 const listingGlowLayerID = "toronto-str-listings-glow";
 const listingLayerID = "toronto-str-listings";
-const individualListingsMinZoom = 17;
+const individualListingsMinZoom = 16;
 const emptyFeatureCollection: MapFeatureCollection = {
   type: "FeatureCollection",
   features: [],
