@@ -173,7 +173,7 @@ export function TorontoMap({
         className="absolute inset-0 flex items-center justify-center bg-[#0b0b0c] px-6"
         ref={fallbackRef}
       >
-        <div className="max-w-sm rounded-md border border-[#3a3a3d] bg-[#141414]/95 px-4 py-3 text-center text-sm font-medium text-[#b6b6ba] shadow-[0_8px_24px_rgb(0_0_0/28%)]">
+        <div className="max-w-sm rounded-md border border-[#3a3a3d] bg-[#141414]/95 px-4 py-3 text-center font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#96969c] shadow-[0_8px_24px_rgb(0_0_0/28%)]">
           Loading Toronto map
         </div>
       </div>

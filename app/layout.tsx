@@ -38,19 +38,19 @@ export default function RootLayout({
             className="flex items-center justify-start gap-2 sm:gap-6"
           >
             <button
-              className="cursor-pointer rounded-sm px-3 py-1.5 text-sm font-medium text-[#d4d4d6] underline-offset-4 transition hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8f8f95]"
+              className="cursor-pointer rounded-sm px-3 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-[#96969c] underline-offset-4 transition hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8f8f95]"
               type="button"
             >
               Contact
             </button>
             <Link
-              className="cursor-pointer rounded-sm px-3 py-1.5 text-sm font-medium text-[#d4d4d6] underline-offset-4 transition hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8f8f95]"
+              className="cursor-pointer rounded-sm px-3 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-[#96969c] underline-offset-4 transition hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8f8f95]"
               href="/terms-of-use"
             >
               Terms of Use
             </Link>
             <Link
-              className="cursor-pointer rounded-sm px-3 py-1.5 text-sm font-medium text-[#d4d4d6] underline-offset-4 transition hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8f8f95]"
+              className="cursor-pointer rounded-sm px-3 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-[#96969c] underline-offset-4 transition hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8f8f95]"
               href="/privacy-policy"
             >
               Privacy Policy
