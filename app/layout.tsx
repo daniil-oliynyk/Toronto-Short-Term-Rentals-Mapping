@@ -37,12 +37,12 @@ export default function RootLayout({
             aria-label="Footer navigation"
             className="flex items-center justify-start gap-2 sm:gap-6"
           >
-            <button
+            <a
               className="cursor-pointer rounded-sm px-3 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-[#96969c] underline-offset-4 transition hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8f8f95]"
-              type="button"
+              href="https://www.daniiloliynyk.dev"
             >
               Contact
-            </button>
+            </a>
             <Link
               className="cursor-pointer rounded-sm px-3 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-[#96969c] underline-offset-4 transition hover:text-white hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8f8f95]"
               href="/terms-of-use"
