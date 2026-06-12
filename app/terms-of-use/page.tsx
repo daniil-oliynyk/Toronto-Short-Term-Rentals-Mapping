@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { LegalPage, type LegalSection } from "@/components/legal-page";
 
 export const metadata: Metadata = {
-  title: "Terms of Use | Toronto STR Explorer",
+  title: "Terms of Use",
   description: "Terms governing use of the Toronto STR Explorer.",
 };
 

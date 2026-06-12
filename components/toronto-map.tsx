@@ -66,7 +66,6 @@ export function TorontoMap({
 
     const map = new mapboxgl.Map({
       container: containerRef.current,
-      // style: "mapbox://styles/mapbox/light-v11",
       style: "mapbox://styles/daniiloliynyk/cmiuwhtq4006901qn06rwb9kd",
       center: torontoCenter,
       zoom: 14.5,
@@ -77,7 +76,6 @@ export function TorontoMap({
       pitchWithRotate: false,
     });
 
-    map.addControl(new mapboxgl.NavigationControl({ visualizePitch: true }));
     map.addControl(
       new mapboxgl.AttributionControl({
         compact: true,
@@ -170,11 +168,19 @@ export function TorontoMap({
     <div className="toronto-map absolute inset-0">
       <div className="h-full w-full" ref={containerRef} />
       <div
-        className="absolute inset-0 flex items-center justify-center bg-[#0b0b0c] px-6"
+        className="absolute inset-0 flex items-center justify-center bg-[#11110f] px-6"
         ref={fallbackRef}
       >
-        <div className="max-w-sm rounded-md border border-[#3a3a3d] bg-[#141414]/95 px-4 py-3 text-center font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#96969c] shadow-[0_8px_24px_rgb(0_0_0/28%)]">
-          Loading Toronto map
+        <div className="flex max-w-sm items-center gap-3 rounded-xl border border-white/10 bg-[#191916]/95 px-4 py-3 text-left shadow-[0_16px_40px_rgb(16_15_11/35%)]">
+          <span className="h-2 w-2 animate-pulse rounded-full bg-[#c87867]" />
+          <div>
+            <p className="text-sm font-semibold tracking-[-0.02em] text-[#f4f1e8]">
+              Loading Toronto map
+            </p>
+            <p className="mt-0.5 text-xs text-[#8d897e]">
+              Preparing registration data
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -244,7 +250,6 @@ function addListingInteractions(
   onListingSelect: (id: string) => void,
   popupRef: MutableRefObject<mapboxgl.Popup | null>,
 ) {
-  
   map.on("click", listingLayerID, (event) => {
     const feature = event.features?.[0];
     if (!feature || feature.geometry.type !== "Point") {
@@ -256,7 +261,6 @@ function addListingInteractions(
       return;
     }
     onListingSelect(id);
-
   });
 
   map.on("mouseenter", listingLayerID, (event) => {
@@ -274,7 +278,6 @@ function addListingInteractions(
 
 
     const address = stringProperty(feature.properties?.address) ?? id;
-    
 
     popupRef.current?.remove();
     popupRef.current = new mapboxgl.Popup({
@@ -285,7 +288,6 @@ function addListingInteractions(
         `<div class="str-popup"><strong>${escapeHTML(address)}</strong></div>`,
       )
       .addTo(map);
-
   });
 
   let hoveredListingID: string | number | undefined;
@@ -322,7 +324,6 @@ function addListingInteractions(
 
     popupRef.current?.remove();
 
-
     if (hoveredListingID !== undefined) {
       map.setFeatureState(
         { source: sourceID, id: hoveredListingID },
@@ -350,7 +351,7 @@ function addListingsSourceAndLayers(map: mapboxgl.Map) {
       source: sourceID,
       filter: ["==", ["get", "cluster"], true],
       paint: {
-        "circle-color": "#d316ec",
+        "circle-color": "#c87867",
         "circle-radius": [
           "+",
           [
@@ -380,7 +381,7 @@ function addListingsSourceAndLayers(map: mapboxgl.Map) {
           "case",
           ["boolean", ["feature-state", "hover"], false],
           0.5,
-          0.32,
+          0.24,
         ],
       },
     });
@@ -396,11 +397,11 @@ function addListingsSourceAndLayers(map: mapboxgl.Map) {
         "circle-color": [
           "step",
           ["get", "count"],
-          "#2c7a7b",
+          "#9f5c52",
           25,
-          "#1f7a6b",
+          "#b96b5d",
           100,
-          "#0f5f63",
+          "#cf806d",
         ],
         "circle-radius": [
           "+",
@@ -421,8 +422,8 @@ function addListingsSourceAndLayers(map: mapboxgl.Map) {
           ],
         ],
         "circle-radius-transition": { duration: 120 },
-        "circle-stroke-color": "#d316ec",
-        "circle-stroke-width": 3,
+        "circle-stroke-color": "#f4c4b8",
+        "circle-stroke-width": 1.5,
       },
     });
   }
@@ -441,7 +442,7 @@ function addListingsSourceAndLayers(map: mapboxgl.Map) {
         "text-ignore-placement": true,
       },
       paint: {
-        "text-color": "#ffffff",
+        "text-color": "#17150f",
         "text-opacity": [
           "case",
           ["boolean", ["feature-state", "hover"], false],
@@ -466,7 +467,7 @@ function addListingsSourceAndLayers(map: mapboxgl.Map) {
         "text-ignore-placement": true,
       },
       paint: {
-        "text-color": "#ffffff",
+        "text-color": "#17150f",
         "text-opacity": [
           "case",
           ["boolean", ["feature-state", "hover"], false],
@@ -477,7 +478,32 @@ function addListingsSourceAndLayers(map: mapboxgl.Map) {
     });
   }
 
-  
+  if (!map.getLayer(listingGlowLayerID)) {
+    map.addLayer({
+      id: listingGlowLayerID,
+      type: "circle",
+      source: sourceID,
+      filter: ["==", ["get", "cluster"], false],
+      paint: {
+        "circle-color": "#35c7d0",
+        "circle-radius": [
+          "case",
+          ["boolean", ["feature-state", "hover"], false],
+          19,
+          14,
+        ],
+        "circle-radius-transition": { duration: 140 },
+        "circle-blur": 0.7,
+        "circle-opacity": [
+          "case",
+          ["boolean", ["feature-state", "hover"], false],
+          0.72,
+          0.42,
+        ],
+      },
+    });
+  }
+
   if (!map.getLayer(listingLayerID)) {
     map.addLayer({
       id: listingLayerID,
@@ -485,16 +511,16 @@ function addListingsSourceAndLayers(map: mapboxgl.Map) {
       source: sourceID,
       filter: ["==", ["get", "cluster"], false],
       paint: {
-        "circle-color": "#ff0000",
+        "circle-color": "#71e2e8",
         "circle-radius": [
           "case",
           ["boolean", ["feature-state", "hover"], false],
-          9,
-          6,
+          9.5,
+          7,
         ],
-        "circle-radius-transition": { duration: 120 },
-        "circle-stroke-color": "#000000",
-        "circle-stroke-width": 1.5,
+        "circle-radius-transition": { duration: 140 },
+        "circle-stroke-color": "#102a2d",
+        "circle-stroke-width": 2,
       },
     });
   }
