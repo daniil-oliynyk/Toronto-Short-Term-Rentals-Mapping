@@ -147,11 +147,11 @@ export function STRExplorer() {
         <div className="absolute left-4 right-4 top-4 z-10 flex flex-col gap-3 lg:left-6 lg:right-[390px]">
           <div className="flex flex-col gap-3 rounded-md border border-[#3a3a3d] bg-[#141414]/95 p-3 shadow-[0_12px_32px_rgb(0_0_0/32%)] backdrop-blur md:flex-row">
             <label className="flex min-w-0 flex-1 flex-col gap-1">
-              <span className="text-xs font-semibold uppercase tracking-normal text-[#b6b6ba]">
+              <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8f8f95]">
                 Search
               </span>
               <input
-                className="h-10 rounded-md border border-[#47474a] bg-[#1c1c1f] px-3 text-sm text-[#f1f1f2] outline-none transition placeholder:text-[#7b7b80] focus:border-[#8f8f95] focus:ring-2 focus:ring-[#8f8f95]/25"
+                className="h-10 rounded-md border border-[#47474a] bg-[#1c1c1f] px-3 text-sm font-normal tracking-[-0.01em] text-[#f1f1f2] outline-none transition placeholder:text-[#6f6f74] focus:border-[#8f8f95] focus:ring-2 focus:ring-[#8f8f95]/25"
                 onChange={(event) => {
                   setSearchValue(event.target.value);
                 }}
@@ -162,11 +162,11 @@ export function STRExplorer() {
             </label>
 
             <label className="flex min-w-0 flex-col gap-1 md:w-64">
-              <span className="text-xs font-semibold uppercase tracking-normal text-[#b6b6ba]">
+              <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8f8f95]">
                 Property type
               </span>
               <select
-                className="h-10 rounded-md border border-[#47474a] bg-[#1c1c1f] px-3 text-sm text-[#f1f1f2] outline-none transition focus:border-[#8f8f95] focus:ring-2 focus:ring-[#8f8f95]/25"
+                className="h-10 rounded-md border border-[#47474a] bg-[#1c1c1f] px-3 text-sm font-normal tracking-[-0.01em] text-[#f1f1f2] outline-none transition focus:border-[#8f8f95] focus:ring-2 focus:ring-[#8f8f95]/25"
                 onChange={(event) => {
                   setPropertyType(event.target.value);
                 }}
@@ -182,7 +182,7 @@ export function STRExplorer() {
             </label>
 
             <button
-              className="h-10 rounded-md border border-[#525255] bg-[#242426] px-4 text-sm font-semibold text-[#f1f1f2] transition hover:bg-[#303034] disabled:cursor-not-allowed disabled:border-[#303033] disabled:bg-[#171719] disabled:text-[#6f6f74] md:self-end"
+              className="h-10 rounded-md border border-[#525255] bg-[#242426] px-4 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-[#f1f1f2] transition hover:bg-[#303034] disabled:cursor-not-allowed disabled:border-[#303033] disabled:bg-[#171719] disabled:text-[#6f6f74] md:self-end"
               disabled={activeFilterCount === 0}
               onClick={clearFilters}
               type="button"
@@ -202,10 +202,10 @@ export function STRExplorer() {
 
       <aside className="hidden w-[360px] shrink-0 border-l border-[#2a2a2d] bg-[#101011] lg:flex lg:min-h-dvh lg:flex-col">
         <header className="border-b border-[#2e2e31] px-5 py-4">
-          <p className="text-xs font-semibold uppercase tracking-normal text-[#a9a9ad]">
+          <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#77777d]">
             Visible area
           </p>
-          <h1 className="mt-1 text-xl font-semibold text-[#f1f1f2]">
+          <h1 className="mt-2 text-xl font-medium tracking-[-0.035em] text-[#f1f1f2]">
             Toronto STR Explorer
           </h1>
         </header>
@@ -213,14 +213,14 @@ export function STRExplorer() {
         <section className="border-b border-[#2e2e31] px-5 py-4">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-normal text-[#a9a9ad]">
+              <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#77777d]">
                 Listings
               </p>
-              <p className="mt-1 text-3xl font-semibold text-[#f1f1f2]">
+              <p className="mt-2 text-3xl font-medium tracking-[-0.04em] text-[#f1f1f2]">
                 {formatNumber(wardStats?.total ?? 0)}
               </p>
             </div>
-            <p className="text-right text-sm text-[#b6b6ba]">
+            <p className="max-w-[180px] text-right text-xs leading-5 text-[#96969c]">
               {meta
                 ? `${formatNumber(meta.totalListings)} registered citywide`
                 : activeFilterCount
@@ -232,8 +232,10 @@ export function STRExplorer() {
 
         <section className="border-b border-[#2e2e31] px-5 py-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-[#f1f1f2]">Ward counts</h2>
-            <span className="text-xs font-medium text-[#a9a9ad]">
+            <h2 className="text-base font-medium tracking-[-0.02em] text-[#f1f1f2]">
+              Ward counts
+            </h2>
+            <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-[#77777d]">
               {wardStatsStatus === "loading"
                 ? "Updating"
                 : `${formatNumber(wardStats?.total ?? 0)} total`}
@@ -278,18 +280,18 @@ function FreshnessBadge({
       : `Updated ${formatRelativeDate(meta?.lastSuccessfulIngestionAt ?? null)}`;
 
   return (
-    <div className="flex w-fit max-w-full flex-wrap items-center gap-x-2 gap-y-1 rounded-md border border-[#3a3a3d] bg-[#141414]/90 px-3 py-2 text-sm text-[#f1f1f2] shadow-[0_8px_24px_rgb(0_0_0/28%)] backdrop-blur">
+    <div className="flex w-fit max-w-full flex-wrap items-center gap-x-2 gap-y-1 rounded-md border border-[#3a3a3d] bg-[#141414]/90 px-3 py-2 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[#d4d4d6] shadow-[0_8px_24px_rgb(0_0_0/28%)] backdrop-blur">
       <span
         className={`h-2.5 w-2.5 rounded-full ${
           status === "error" ? "bg-[#d96c4a]" : "bg-[#1f9d75]"
         }`}
       />
-      <span className="font-medium">{label}</span>
-      <span className="text-[#a9a9ad]">
+      <span>{label}</span>
+      <span className="text-[#77777d]">
         {formatNumber(visibleListingCount)} in view
       </span>
       {meta ? (
-        <span className="text-[#a9a9ad]">
+        <span className="text-[#77777d]">
           {formatNumber(meta.totalListings)} total
         </span>
       ) : null}
@@ -309,10 +311,10 @@ function ListingSelection({
   if (status === "loading") {
     return (
       <div className="mt-4 rounded-md border border-[#2e2e31] bg-[#18181a] p-4">
-        <p className="text-xs font-semibold uppercase tracking-normal text-[#a9a9ad]">
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#77777d]">
           Selection
         </p>
-        <p className="mt-2 text-sm text-[#d4d4d6]">
+        <p className="mt-3 text-sm leading-6 text-[#a9a9ad]">
           Loading {selectedListingID}
         </p>
       </div>
@@ -322,10 +324,10 @@ function ListingSelection({
   if (status === "error") {
     return (
       <div className="mt-4 rounded-md border border-[#3d2d2b] bg-[#211816] p-4">
-        <p className="text-xs font-semibold uppercase tracking-normal text-[#bda49f]">
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#bda49f]">
           Selection
         </p>
-        <p className="mt-2 text-sm text-[#ffb6a3]">
+        <p className="mt-3 text-sm leading-6 text-[#ffb6a3]">
           Listing details could not be loaded.
         </p>
       </div>
@@ -335,10 +337,10 @@ function ListingSelection({
   if (!listing) {
     return (
       <div className="mt-4 rounded-md border border-[#2e2e31] bg-[#18181a] p-4">
-        <p className="text-xs font-semibold uppercase tracking-normal text-[#a9a9ad]">
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#77777d]">
           Selection
         </p>
-        <p className="mt-2 text-sm text-[#d4d4d6]">
+        <p className="mt-3 text-sm leading-6 text-[#a9a9ad]">
           Select a point on the map to view registration details.
         </p>
       </div>
@@ -347,10 +349,10 @@ function ListingSelection({
 
   return (
     <div className="mt-4 rounded-md border border-[#2e2e31] bg-[#18181a] p-4">
-      <p className="text-xs font-semibold uppercase tracking-normal text-[#a9a9ad]">
+      <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-[#77777d]">
         Selection
       </p>
-      <h3 className="mt-2 text-base font-semibold text-[#f1f1f2]">
+      <h3 className="mt-3 text-lg font-medium tracking-[-0.025em] text-[#f1f1f2]">
         {listing.address}
       </h3>
       <dl className="mt-3 grid grid-cols-1 gap-3 text-sm">
@@ -368,10 +370,10 @@ function ListingSelection({
 
       <div className="mt-4 border-t border-[#2e2e31] pt-4">
         <div className="flex items-center justify-between gap-3">
-          <h4 className="text-sm font-semibold text-[#f1f1f2]">
+          <h4 className="text-sm font-medium tracking-[-0.015em] text-[#f1f1f2]">
             Registrations at this address
           </h4>
-          <span className="shrink-0 text-xs font-medium text-[#a9a9ad]">
+          <span className="shrink-0 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-[#77777d]">
             {formatNumber(listing.registrationIds.length)} total
           </span>
         </div>
@@ -379,7 +381,7 @@ function ListingSelection({
         <div className="mt-3 max-h-56 overflow-y-auto rounded-md border border-[#2e2e31] bg-[#121214]">
           {listing.registrationIds.map((registrationID) => (
             <div
-              className="border-b border-[#2e2e31] px-3 py-2 text-sm text-[#d4d4d6] last:border-b-0"
+              className="border-b border-[#2e2e31] px-3 py-2 font-mono text-xs text-[#b6b6ba] last:border-b-0"
               key={registrationID}
             >
               {registrationID}
@@ -400,7 +402,7 @@ function WardStatsList({
 }) {
   if (status === "error") {
     return (
-      <div className="mt-3 rounded-md border border-[#3d2d2b] bg-[#211816] px-3 py-2 text-sm text-[#ffb6a3]">
+      <div className="mt-3 rounded-md border border-[#3d2d2b] bg-[#211816] px-3 py-2 text-sm leading-6 text-[#ffb6a3]">
         Ward counts could not be loaded.
       </div>
     );
@@ -408,7 +410,7 @@ function WardStatsList({
 
   if (!stats?.wards.length) {
     return (
-      <div className="mt-3 rounded-md border border-dashed border-[#444447] bg-[#18181a] px-3 py-3 text-sm text-[#a9a9ad]">
+      <div className="mt-3 rounded-md border border-dashed border-[#444447] bg-[#18181a] px-3 py-3 text-sm leading-6 text-[#96969c]">
         No ward counts for the current view.
       </div>
     );
@@ -421,12 +423,12 @@ function WardStatsList({
           className="flex items-center justify-between rounded-md border border-[#2e2e31] bg-[#18181a] px-3 py-2"
           key={`${wardCount.wardNumber ?? "unknown"}-${wardCount.wardName ?? "ward"}`}
         >
-          <span className="truncate text-sm text-[#d4d4d6]">
+          <span className="truncate text-sm tracking-[-0.01em] text-[#b6b6ba]">
             {[wardCount.wardNumber, wardCount.wardName]
               .filter(Boolean)
               .join(" - ") || "Unknown ward"}
           </span>
-          <span className="ml-3 text-sm font-semibold text-[#c7c7cb]">
+          <span className="ml-3 font-mono text-xs font-semibold text-[#c7c7cb]">
             {formatNumber(wardCount.count)}
           </span>
         </div>
@@ -438,10 +440,12 @@ function WardStatsList({
 function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <dt className="text-xs font-semibold uppercase tracking-normal text-[#a9a9ad]">
+      <dt className="font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-[#77777d]">
         {label}
       </dt>
-      <dd className="mt-1 break-words text-[#d4d4d6]">{value || "None"}</dd>
+      <dd className="mt-1.5 break-words leading-6 text-[#b6b6ba]">
+        {value || "None"}
+      </dd>
     </div>
   );
 }
