@@ -29,7 +29,12 @@ button,
 input,
 select,
 textarea {
-  font: inherit;
+  font-family: inherit;
+}
+
+.site-footer button {
+  font-size: 9px !important;
+  line-height: 1;
 }
 
 .toronto-map .mapboxgl-ctrl-group {
